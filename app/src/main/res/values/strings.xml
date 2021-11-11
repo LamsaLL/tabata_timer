@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">amsallel_tabata_timer</string>
     <string name="button_add_workout">Créer un nouvel entrainement</string>
+    <string name="training_name">Entrainement</string>
 </resources>

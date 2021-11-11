@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_android_black_24dp.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/drawable/ic_round_save_24.xml" value="0.28177083333333336" />
+        <entry key="app/src/main/res/layout/activity_add_workout.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.265625" />
+      </map>
+    </option>
+  </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
