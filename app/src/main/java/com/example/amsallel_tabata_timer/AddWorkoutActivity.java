@@ -10,6 +10,11 @@ public class AddWorkoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workout);
+
+    }
+
+    public void onClose(View view){
+        AddWorkoutActivity.super.finish();
     }
 
 }
