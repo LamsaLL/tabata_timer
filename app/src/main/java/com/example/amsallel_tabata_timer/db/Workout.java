@@ -1,4 +1,4 @@
-package com.example.amsallel_tabata_timer;
+package com.example.amsallel_tabata_timer.db;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,12 +9,12 @@ public class Workout {
     private long id;
     
     private String name;
-    private int preparation_time;
-    private int work_time;
-    private int rest_time;
-    private int rest_btw_sets_time;
-    private int number_of_sets;
-    private int number_of_cycles;
+    private int preparationTime;
+    private int workTime;
+    private int restTime;
+    private int restBtwSetsTime;
+    private int numberOfSets;
+    private int numberOfCycles;
 
     /*
      * Getters and Setters
@@ -27,62 +27,62 @@ public class Workout {
         this.id = id;
     }
     
-    public int getName() {
+    public String getName() {
         return name;
     }
     
     public void setName(String name) {
         this.name = name;
     }
-    
+
+
     public int getPreparationTime() {
-        return preparation_time;
+        return preparationTime;
     }
-    
-    public void setPreparationTime(int preparation_time) {
-        this.preparation_time = preparation_time;
+
+    public void setPreparationTime(int preparationTime) {
+        this.preparationTime = preparationTime;
     }
-    
+
     public int getWorkTime() {
-        return work_time;
+        return workTime;
     }
-    
-    public void setWorkTime(int work_time) {
-        this.work_time = work_time;
+
+    public void setWorkTime(int workTime) {
+        this.workTime = workTime;
     }
-    
+
     public int getRestTime() {
-        return rest_time;
+        return restTime;
     }
-    
-    public void setRestTime(int rest_time) {
-        this.rest_time = rest_time;
-    }    
+
+    public void setRestTime(int restTime) {
+        this.restTime = restTime;
+    }
 
     public int getRestBtwSetsTime() {
-        return rest_btw_sets_time;
+        return restBtwSetsTime;
     }
-    
-    public void setRestBtwSetsTime(int rest_btw_sets_time) {
-        this.rest_btw_sets_time = rest_btw_sets_time;
-    }  
-    
+
+    public void setRestBtwSetsTime(int restBtwSetsTime) {
+        this.restBtwSetsTime = restBtwSetsTime;
+    }
+
     public int getNumberOfSets() {
-        return number_of_sets;
+        return numberOfSets;
     }
-    
-    public void setNumberOfSets(int number_of_sets) {
-        this.number_of_sets = number_of_sets;
-    }    
+
+    public void setNumberOfSets(int numberOfSets) {
+        this.numberOfSets = numberOfSets;
+    }
 
     public int getNumberOfCycles() {
-        return number_of_sets;
+        return numberOfCycles;
     }
-    
-    public void setNumberOfCyles(int number_of_cyles) {
-        this.number_of_cycles = number_of_cyles;
-    }    
 
+    public void setNumberOfCycles(int numberOfCycles) {
+        this.numberOfCycles = numberOfCycles;
+    }
 }
 
 

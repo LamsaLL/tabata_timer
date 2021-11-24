@@ -1,4 +1,4 @@
-package com.example.amsallel_tabata_timer;
+package com.example.amsallel_tabata_timer.db;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -18,7 +18,7 @@ public interface WorkoutDao {
     long insert(Workout workout);
 
     @Insert
-    long[] insertAll(Wourkout... workouts);
+    long[] insertAll(Workout... workouts);
 
     @Delete
     void delete(Workout workout);

@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_round_save_24.xml" value="0.28177083333333336" />
         <entry key="app/src/main/res/layout/activity_add_workout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.265625" />
+        <entry key="app/src/main/res/layout/template_workout.xml" value="0.2890625" />
       </map>
     </option>
   </component>

@@ -1,4 +1,4 @@
-package com.example.amsallel_tabata_timer;
+package com.example.amsallel_tabata_timer.db;
 
 import android.content.Context;
 
