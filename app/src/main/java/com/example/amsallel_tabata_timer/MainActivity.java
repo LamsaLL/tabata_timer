@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -126,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
         GetWorkouts gw = new GetWorkouts();
         gw.execute();
     }
-
 
     @Override
     protected void onStart() {

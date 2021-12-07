@@ -13,9 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
         <ImageButton
-            android:id="@+id/button_cancel"
+            android:id="@+id/buttonCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackground"
@@ -24,7 +23,7 @@
             />
 
         <ImageButton
-            android:id="@+id/button_save"
+            android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -32,6 +31,7 @@
             android:background="?android:selectableItemBackground"
             app:srcCompat="@drawable/ic_round_save_24" />
     </RelativeLayout>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,51 +49,56 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/button_down"
+            android:id="@+id/buttonDownPrep"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackground"
-            app:srcCompat="@drawable/ic_baseline_remove_24" />
+            app:srcCompat="@drawable/ic_baseline_remove_24"
+            android:onClick="onTimeDown"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="RelativeOverlap"
             android:gravity="center"
-            >
+            android:orientation="horizontal"
+            tools:ignore="RelativeOverlap">
+
             <EditText
                 android:id="@+id/edit_text_prep_minutes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:inputType="number"
-                android:maxLength="2"
                 android:hint="@string/prep_minute"
-                />
+                android:inputType="number"
+                android:maxLength="2" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint=":"/>
+                android:hint=":" />
+
             <EditText
-                android:id="@+id/edit_text_prep_seconds"
+                android:id="@+id/editTextPrepSeconds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:inputType="number"
-                android:maxLength="2"
                 android:hint="@string/prep_seconds"
-                />
+                android:inputType="number"
+                android:maxLength="2" />
         </LinearLayout>
+
         <ImageButton
-            android:id="@+id/button_up"
+            android:id="@+id/buttonUpPrep"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:background="?android:selectableItemBackground"
-            app:srcCompat="@drawable/ic_baseline_add_24"
-            />
+            android:onClick="onTimeUp"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
     </RelativeLayout>
+
 </LinearLayout>
 
 
