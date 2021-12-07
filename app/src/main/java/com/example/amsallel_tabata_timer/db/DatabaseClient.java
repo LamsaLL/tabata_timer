@@ -49,9 +49,10 @@ public class DatabaseClient {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
-            //
-            // db.execSQL("INSERT INTO task (libelle, description) VALUES(\"tâche 1\", \"installer la librairie Room\");");
-            // db.execSQL("INSERT INTO task (libelle, description) VALUES(\"tâche 2\", \" Créer DatabaseClient\");");
+             db.execSQL("INSERT INTO workout (name, preparationTime, workTime, restTime, restBtwSetsTime, numberOfSets, numberOfCycles)" +
+                     " VALUES(\"entrainement 1\", \"10\", \"20\",\"30\",\"5\",\"3\",\"2\");");
+             db.execSQL("INSERT INTO workout (name, preparationTime, workTime, restTime, restBtwSetsTime, numberOfSets, numberOfCycles)" +
+                     " VALUES(\"entrainement 2\", \"20\", \"10\",\"60\",\"10\",\"5\",\"8\");");
 
         }
     };

@@ -36,13 +36,21 @@ public class WorkoutsAdapter extends ArrayAdapter<Workout> {
         final View rowView = inflater.inflate(R.layout.template_workout, parent, false);
 
         // Récupération des objets graphiques dans le template
-        //TextView textViewTask = (TextView) rowView.findViewById(R.id.textViewTask);
-        //TextView textViewDesc = (TextView) rowView.findViewById(R.id.textViewDesc);
+        TextView textViewWorkoutTitle = (TextView) rowView.findViewById(R.id.textViewWorkoutTitle);
+        TextView textViewPreparation = (TextView) rowView.findViewById(R.id.textViewPreparation);
+        TextView textViewWorkTime = (TextView) rowView.findViewById(R.id.textViewWork);
+        TextView textViewRestTime = (TextView) rowView.findViewById(R.id.textViewRest);
+        TextView textNumberOfCycles = (TextView) rowView.findViewById(R.id.textViewCycle);
+        TextView textNumberOfSets = (TextView) rowView.findViewById(R.id.textViewSet);
+        TextView textRestBtwSetsTime = (TextView) rowView.findViewById(R.id.textViewRestBtwSet);
 
-
-        //textViewTask.setText(workout.getLibelle());
-        //textViewDesc.setText(workout.getDescription());
-
+        textViewWorkoutTitle.setText(workout.getName());
+        textViewPreparation.setText("Préparation: " + workout.getPreparationTime() + " secs");
+        textViewWorkTime.setText("Travail: " + workout.getWorkTime() + " secs");
+        textViewRestTime.setText("Repos: " + workout.getRestTime() + " secs");
+        textNumberOfCycles.setText("Nombre de cycles: " + workout.getNumberOfCycles() );
+        textNumberOfSets.setText("Nombre de set: " + workout.getNumberOfSets() );
+        textRestBtwSetsTime.setText("Repos entre les sets: " + workout.getRestBtwSetsTime() + " secs");
 
         return rowView;
     }
