@@ -65,27 +65,14 @@
             tools:ignore="RelativeOverlap">
 
             <EditText
-                android:id="@+id/edit_text_prep_minutes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:hint="@string/prep_minute"
-                android:inputType="number"
-                android:maxLength="2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint=":" />
-
-            <EditText
                 android:id="@+id/editTextPrepSeconds"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:hint="@string/prep_seconds"
                 android:inputType="number"
-                android:maxLength="2" />
+                android:maxLength="4" />
+
         </LinearLayout>
 
         <ImageButton
