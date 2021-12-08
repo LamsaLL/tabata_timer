@@ -14,118 +14,128 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddWorkoutActivity extends AppCompatActivity {
-    int counterSec = 0;
     private Handler repeatUpdateHandler = new Handler();
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
-    int counterMin = 0;
 
     class RptUpdater implements Runnable {
-        final EditText editTextPrepSeconds = (EditText) findViewById(R.id.editTextPrepSeconds);
+        private EditText editTextView;
+
+        public RptUpdater(EditText editTextView) {
+            this.editTextView = editTextView;
+        }
 
         public void run() {
-            if( mAutoIncrement ){
-                counterSec++;
-                editTextPrepSeconds.setText(String.valueOf(counterSec));
-                repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
-            } else if( mAutoDecrement ){
-                if(counterSec > 0 ){
-                    counterSec--;
+            if (mAutoIncrement) {
+                int counter = Integer.parseInt(String.valueOf(editTextView.getText()));
+                counter++;
+                editTextView.setText(String.valueOf(counter));
+                repeatUpdateHandler.postDelayed(new RptUpdater(editTextView), 50);
+            } else if (mAutoDecrement) {
+                int counter = Integer.parseInt(String.valueOf(editTextView.getText()));
+                if (counter > 0) {
+                    counter--;
                 }
-                editTextPrepSeconds.setText(String.valueOf(counterSec));
-                repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
+                editTextView.setText(String.valueOf(counter));
+                repeatUpdateHandler.postDelayed(new RptUpdater(editTextView), 50);
             }
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workout);
 
-        final ImageButton upPrep = (ImageButton) findViewById(R.id.buttonUpPrep);
-        final ImageButton downPrep = (ImageButton) findViewById(R.id.buttonDownPrep);
+        final ImageButton buttonUpPrep = (ImageButton) findViewById(R.id.buttonUpPrep);
+        final ImageButton buttonDownPrep = (ImageButton) findViewById(R.id.buttonDownPrep);
+        final ImageButton buttonUpWork = (ImageButton) findViewById(R.id.buttonUpWork);
+        final ImageButton buttonDownWork = (ImageButton) findViewById(R.id.buttonDownWork);
+        final ImageButton buttonUpRest = (ImageButton) findViewById(R.id.buttonUpRest);
+        final ImageButton buttonDownRest = (ImageButton) findViewById(R.id.buttonDownRest);
+        final ImageButton buttonUpCycles = (ImageButton) findViewById(R.id.buttonUpCycles);
+        final ImageButton buttonDownCycles = (ImageButton) findViewById(R.id.buttonDownCycles);
+        final ImageButton buttonUpSets = (ImageButton) findViewById(R.id.buttonUpSets);
+        final ImageButton buttonDownSets = (ImageButton) findViewById(R.id.buttonDownSets);
+        final ImageButton buttonUpRestBtwSets = (ImageButton) findViewById(R.id.buttonUpRestBtwSets);
+        final ImageButton buttonDownRestBtwSets = (ImageButton) findViewById(R.id.buttonDownRestBtwSets);
 
         final EditText editTextPrepSeconds = (EditText) findViewById(R.id.editTextPrepSeconds);
+        final EditText editTextWorkSeconds = (EditText) findViewById(R.id.editTextWorkSeconds);
+        final EditText editTexRestSeconds = (EditText) findViewById(R.id.editTexRestSeconds);
+        final EditText editTextCycles = (EditText) findViewById(R.id.editTextCycles);
+        final EditText editTextSets = (EditText) findViewById(R.id.editTextSets);
+        final EditText editTextRestBtwSetsSeconds = (EditText) findViewById(R.id.editTextRestBtwSetsSeconds);
 
-        upPrep.setOnLongClickListener(
-                new View.OnLongClickListener(){
+        handleEditTimers(editTextPrepSeconds, buttonUpPrep, buttonDownPrep);
+        handleEditTimers(editTextWorkSeconds, buttonUpWork, buttonDownWork);
+        handleEditTimers(editTexRestSeconds, buttonUpRest, buttonDownRest);
+        handleEditTimers(editTextCycles, buttonUpCycles, buttonDownCycles);
+        handleEditTimers(editTextSets, buttonUpSets, buttonDownSets);
+        handleEditTimers(editTextRestBtwSetsSeconds, buttonUpRestBtwSets, buttonDownRestBtwSets);
+    }
+
+    public void handleEditTimers(EditText editTextView, ImageButton buttonUp, ImageButton buttonDown) {
+        buttonUp.setOnLongClickListener(
+                new View.OnLongClickListener() {
                     public boolean onLongClick(View arg0) {
                         mAutoIncrement = true;
-                        repeatUpdateHandler.post( new RptUpdater() );
+                        repeatUpdateHandler.post(new RptUpdater(editTextView));
                         return false;
                     }
                 }
         );
 
-        downPrep.setOnLongClickListener(
-                new View.OnLongClickListener(){
+        buttonDown.setOnLongClickListener(
+                new View.OnLongClickListener() {
                     public boolean onLongClick(View arg0) {
                         mAutoDecrement = true;
-                        repeatUpdateHandler.post( new RptUpdater() );
+                        repeatUpdateHandler.post(new RptUpdater(editTextView));
                         return false;
                     }
                 }
         );
 
-        upPrep.setOnTouchListener( new View.OnTouchListener() {
+        buttonUp.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
-                        && mAutoIncrement ){
+                if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                        && mAutoIncrement) {
                     mAutoIncrement = false;
                 }
                 return false;
             }
         });
 
-        downPrep.setOnTouchListener( new View.OnTouchListener() {
+        buttonDown.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
-                        && mAutoDecrement ){
+                if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+                        && mAutoDecrement) {
                     mAutoDecrement = false;
                 }
                 return false;
             }
         });
 
-        editTextPrepSeconds.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        buttonUp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int counter = Integer.parseInt(String.valueOf(editTextView.getText()));
+                counter++;
+                editTextView.setText(String.valueOf(counter));
             }
+        });
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                if (editTextPrepSeconds.getText().toString().equals("") || Integer.parseInt(String.valueOf(editable)) <= 0) {
-                    counterSec = 0;
-                } else {
-                    int newCounter = Integer.parseInt(editTextPrepSeconds.getText().toString() );
-                    counterSec = newCounter;
+        buttonDown.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int counter = Integer.parseInt(String.valueOf(editTextView.getText()));
+                if (counter > 0) {
+                    counter--;
                 }
+                editTextView.setText(String.valueOf(counter));
             }
         });
     }
 
     public void onClose(View view) {
         AddWorkoutActivity.super.finish();
-    }
-
-    public void onTimeUp(View view) {
-        final ImageButton upPrep = (ImageButton) findViewById(R.id.buttonUpPrep);
-        final EditText editTextPrepSeconds = (EditText) findViewById(R.id.editTextPrepSeconds);
-
-        counterSec++;
-        editTextPrepSeconds.setText(String.valueOf(counterSec));
-    }
-
-    public void onTimeDown(View view) {
-        final EditText editTextPrepSeconds = (EditText) findViewById(R.id.editTextPrepSeconds);
-        if(counterSec > 0 ){
-            counterSec--;
-        }
-        editTextPrepSeconds.setText(String.valueOf(counterSec));
     }
 }
