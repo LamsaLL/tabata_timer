@@ -29,7 +29,10 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 editTextPrepSeconds.setText(String.valueOf(counterSec));
                 repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
             } else if( mAutoDecrement ){
-                counterSec--;
+                if(counterSec > 0 ){
+                    counterSec--;
+                }
+                editTextPrepSeconds.setText(String.valueOf(counterSec));
                 repeatUpdateHandler.postDelayed( new RptUpdater(), 50 );
             }
         }
@@ -40,6 +43,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_workout);
 
         final ImageButton upPrep = (ImageButton) findViewById(R.id.buttonUpPrep);
+        final ImageButton downPrep = (ImageButton) findViewById(R.id.buttonDownPrep);
 
         final EditText editTextPrepSeconds = (EditText) findViewById(R.id.editTextPrepSeconds);
 
@@ -53,11 +57,31 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 }
         );
 
+        downPrep.setOnLongClickListener(
+                new View.OnLongClickListener(){
+                    public boolean onLongClick(View arg0) {
+                        mAutoDecrement = true;
+                        repeatUpdateHandler.post( new RptUpdater() );
+                        return false;
+                    }
+                }
+        );
+
         upPrep.setOnTouchListener( new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
                         && mAutoIncrement ){
                     mAutoIncrement = false;
+                }
+                return false;
+            }
+        });
+
+        downPrep.setOnTouchListener( new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if( (event.getAction()==MotionEvent.ACTION_UP || event.getAction()==MotionEvent.ACTION_CANCEL)
+                        && mAutoDecrement ){
+                    mAutoDecrement = false;
                 }
                 return false;
             }
@@ -75,17 +99,15 @@ public class AddWorkoutActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-                if (editTextPrepSeconds.getText().toString().equals("")) {
+                if (editTextPrepSeconds.getText().toString().equals("") || Integer.parseInt(String.valueOf(editable)) <= 0) {
                     counterSec = 0;
                 } else {
-                    int newCounter = Integer.parseInt(editTextPrepSeconds.getText().toString());
+                    int newCounter = Integer.parseInt(editTextPrepSeconds.getText().toString() );
                     counterSec = newCounter;
                 }
             }
         });
     }
-
-
 
     public void onClose(View view) {
         AddWorkoutActivity.super.finish();
@@ -100,7 +122,10 @@ public class AddWorkoutActivity extends AppCompatActivity {
     }
 
     public void onTimeDown(View view) {
-        final ImageButton upPrep = (ImageButton) findViewById(R.id.buttonDownPrep);
-
+        final EditText editTextPrepSeconds = (EditText) findViewById(R.id.editTextPrepSeconds);
+        if(counterSec > 0 ){
+            counterSec--;
+        }
+        editTextPrepSeconds.setText(String.valueOf(counterSec));
     }
 }
