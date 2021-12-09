@@ -3,6 +3,7 @@ package com.example.amsallel_tabata_timer;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
     private DatabaseClient mDb;
     private WorkoutsAdapter adapter;
 
@@ -43,15 +45,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new WorkoutsAdapter(this, new ArrayList<Workout>());
         workoutList.setAdapter(adapter);
 
-//        // Event on add button
-//        buttonAdd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, AddTaskActivity.class);
-//                startActivityForResult(intent, REQUEST_CODE_ADD);
-//            }
-//        });
-
         // Add click event to listView
         workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
                 // Get the clicked workout thanks to adapter
                 Workout workout = adapter.getItem(position);
 
+                Intent WorkoutViewActivityIntent = new Intent(MainActivity.this, WorkoutActivity.class);
+
+                WorkoutViewActivityIntent.putExtra("workout", workout);
+                // Launch activity change demand
+                startActivity(WorkoutViewActivityIntent);
                 // Message
                 Toast.makeText(MainActivity.this, "Click : " + workout.getName(), Toast.LENGTH_SHORT).show();
             }
@@ -73,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
                 // Get the clicked workout thanks to adapter
                 Workout workout = adapter.getItem(position);
+
+                // Create new intent
+                Intent WorkoutViewActivityIntent = new Intent(MainActivity.this, WorkoutActivity.class);
+
+                WorkoutViewActivityIntent.putExtra("workout", (Parcelable) workout);
+                // Launch activity change demand
+                startActivity(WorkoutViewActivityIntent);
 
                 // Message
                 Toast.makeText(MainActivity.this, "LongClick : " + workout.getName(), Toast.LENGTH_SHORT).show();

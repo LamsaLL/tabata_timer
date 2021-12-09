@@ -2,9 +2,11 @@ package com.example.amsallel_tabata_timer.db;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 
 @Entity(tableName = "workout")
-public class Workout {
+public class Workout implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private long id;
     
