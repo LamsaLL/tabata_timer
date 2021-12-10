@@ -2,24 +2,24 @@ package com.example.amsallel_tabata_timer.data;
 
 import android.os.CountDownTimer;
 
+import java.util.ArrayList;
+
 public class Counter extends UpdateSource {
     // CONSTANTE
-    private final static long INITIAL_TIME = 5000;
+    private final static long INITIAL_TIME = 0;
 
     // DATA
-    private long updatedTime = INITIAL_TIME;
+    private long updatedTime;
     private CountDownTimer timer;   // https://developer.android.com/reference/android/os/CountDownTimer.html
+    private ArrayList<Action> actions;
 
-
-    public Counter() {
-        updatedTime = INITIAL_TIME;
+    public Counter(long updatedTime, ArrayList<Action> actions) {
+        this.updatedTime = updatedTime * 1000;
+        this.actions = actions;
     }
 
     // Lancer le compteur
     public void start() {
-
-        if (timer == null) {
-
             // Créer le CountDownTimer
             timer = new CountDownTimer(updatedTime, 10) {
 
@@ -33,15 +33,16 @@ public class Counter extends UpdateSource {
 
                 // Callback fired when the time is up
                 public void onFinish() {
-                    updatedTime = 0;
+                    if(actions.get(0) != null){
+                        updatedTime = actions.remove(0).getTimeValue() * 1000;
+                        Counter.this.start();
+                    }
 
                     // Mise à jour
                     update();
                 }
 
             }.start();   // Start the countdown
-        }
-
     }
 
     // Mettre en pause le compteur

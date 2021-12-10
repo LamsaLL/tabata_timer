@@ -19,7 +19,7 @@ import com.example.amsallel_tabata_timer.db.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//Penser à l'asynchrone pour l'appel a la base de données
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseClient mDb;
