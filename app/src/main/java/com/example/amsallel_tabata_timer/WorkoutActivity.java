@@ -96,9 +96,9 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
     // Mise à jour graphique
     private void updating() {
         // Affichage des informations du compteur
-        timerValue.setText("" + counter.getMinutes() + ":"
-                + String.format("%02d", counter.getSecondes()) + ":"
-                + String.format("%03d", counter.getMillisecondes()));
+        timerValue.setText("" + String.format("%02d",counter.getMinutes()) + ":"
+                + String.format("%02d", counter.getSecondes())
+        );
     }
 
     /**
