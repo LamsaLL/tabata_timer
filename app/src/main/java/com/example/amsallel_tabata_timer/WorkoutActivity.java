@@ -2,7 +2,10 @@ package com.example.amsallel_tabata_timer;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -62,6 +65,17 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
     // Mettre en pause le compteur
     public void onPause(View view) {
         counter.pause();
+    }
+
+    public void onTogglePlayPause(View view){
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+
+        if (on) {
+            counter.start();
+        } else {
+            counter.pause();
+        }
     }
 
 

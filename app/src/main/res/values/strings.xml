@@ -13,4 +13,6 @@
     <string name="set_label">Sets</string>
     <string name="restBtwSet_label">Repos entre les sets</string>
     <string name="exit_button_text">Sortir</string>
+    <string name="start" > </string>
+    <string name="pause" />
 </resources>
