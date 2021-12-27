@@ -2,9 +2,8 @@ package com.example.amsallel_tabata_timer;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +16,9 @@ import com.example.amsallel_tabata_timer.db.Workout;
 import java.util.ArrayList;
 
 public class WorkoutActivity extends AppCompatActivity implements OnUpdateListener{
+
+    private ActionsAdapter adapter;
+    private ListView actionList;
     // VIEW
     private TextView timerValue;
     // DATA
@@ -34,13 +36,20 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         ArrayList<Action> actions = new ArrayList<>();
 
         for(int i = 0; i < workout.getNumberOfSets() ; i++) {
-            actions.add(new Action("P", workout.getPreparationTime()));
+            actions.add(new Action("Prepare", workout.getPreparationTime()));
             for (int y = 0; y < workout.getNumberOfCycles(); y++) {
-                actions.add(new Action("W", workout.getWorkTime()));
-                actions.add(new Action("R", workout.getRestTime()));
+                actions.add(new Action("Work", workout.getWorkTime()));
+                actions.add(new Action("Rest", workout.getRestTime()));
             }
             actions.add(new Action("RBS", workout.getRestBtwSetsTime()));
         }
+
+        //get views
+        actionList = findViewById(R.id.actionList);
+
+        // Link adapter to listView
+        adapter = new ActionsAdapter(this, actions);
+        actionList.setAdapter(adapter);
 
         // Récupérer la view
         timerValue = (TextView) findViewById(R.id.timerValue);

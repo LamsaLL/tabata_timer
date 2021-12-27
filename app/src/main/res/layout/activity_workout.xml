@@ -13,14 +13,23 @@
         android:onClick="onClose"
         />
 
+
     <TextView
         android:id="@+id/timerValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="37dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
         android:text="00:00"
-        android:textSize="100sp"
+        android:textSize="100sp" />
+    <ListView
+        android:id="@+id/actionList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/playPauseButton"
+        android:layout_below="@+id/timerValue"
+        android:orientation="vertical"
+        android:choiceMode="singleChoice"
         />
 
     <ToggleButton
@@ -35,11 +44,12 @@
         android:onClick="onTogglePlayPause"
         />
 
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="90dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:onClick="onReset"
-        android:text="Reset" />
+
+<!--    <Button-->
+<!--        android:id="@+id/resetButton"-->
+<!--        android:layout_width="90dp"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:onClick="onReset"-->
+<!--        android:text="Reset" />-->
 </RelativeLayout>

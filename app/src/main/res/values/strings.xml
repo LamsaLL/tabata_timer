@@ -15,4 +15,5 @@
     <string name="exit_button_text">Sortir</string>
     <string name="start" > </string>
     <string name="pause" />
+    <string name="action_title">Titre action</string>
 </resources>
