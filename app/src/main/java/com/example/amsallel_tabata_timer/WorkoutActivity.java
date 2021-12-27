@@ -37,12 +37,12 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         ArrayList<Action> actions = new ArrayList<>();
 
         for(int i = 0; i < workout.getNumberOfSets() ; i++) {
-            actions.add(new Action("Prepare", workout.getPreparationTime()));
+            actions.add(new Action("PRÉPARER", workout.getPreparationTime()));
             for (int y = 0; y < workout.getNumberOfCycles(); y++) {
-                actions.add(new Action("Work", workout.getWorkTime()));
-                actions.add(new Action("Rest", workout.getRestTime()));
+                actions.add(new Action("TRAVAIL", workout.getWorkTime()));
+                actions.add(new Action("REPOS", workout.getRestTime()));
             }
-            actions.add(new Action("RBS", workout.getRestBtwSetsTime()));
+            actions.add(new Action("REPOS AVANT NOUVEAU SET", workout.getRestBtwSetsTime()));
         }
 
         actionLabelView = (TextView) findViewById(R.id.actionLabelView);

@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorkoutActivity">
+    tools:context=".WorkoutActivity"
+    android:background="@color/teal_200"
+    >
     <Button
         android:layout_width="90dp"
         android:layout_height="45dp"
@@ -18,7 +20,7 @@
         android:id="@+id/timerValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true"
         android:text="00:00"
         android:textSize="100sp" />
@@ -30,10 +32,10 @@
         android:text="@string/action_label"
         android:layout_below="@id/timerValue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:textSize="50sp"
         />
-    
+
     <ToggleButton
         android:id="@+id/playPauseButton"
         android:layout_width="60dp"
