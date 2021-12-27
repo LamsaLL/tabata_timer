@@ -16,4 +16,5 @@
     <string name="start" > </string>
     <string name="pause" />
     <string name="action_title">Titre action</string>
+    <string name="action_label">action label</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.amsallel_tabata_timer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,13 +15,13 @@ import com.example.amsallel_tabata_timer.data.OnUpdateListener;
 import com.example.amsallel_tabata_timer.db.Workout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class WorkoutActivity extends AppCompatActivity implements OnUpdateListener{
 
-    private ActionsAdapter adapter;
-    private ListView actionList;
     // VIEW
     private TextView timerValue;
+    private TextView actionLabelView;
     // DATA
     private Counter counter;
 
@@ -44,25 +45,19 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
             actions.add(new Action("RBS", workout.getRestBtwSetsTime()));
         }
 
-        //get views
-        actionList = findViewById(R.id.actionList);
-
-        // Link adapter to listView
-        adapter = new ActionsAdapter(this, actions);
-        actionList.setAdapter(adapter);
+        actionLabelView = (TextView) findViewById(R.id.actionLabelView);
 
         // Récupérer la view
         timerValue = (TextView) findViewById(R.id.timerValue);
-
         // Initialiser l'objet Compteur
-        counter = new Counter(actions.remove(0).getTimeValue(), actions);
+        counter = new Counter(actions.get(0).getTimeValue(), actions);
+        actionLabelView.setText(actions.get(0).getLabel());
 
         // Abonner l'activité au compteur pour "suivre" les événements
         counter.addOnUpdateListener(this);
         // Mise à jour graphique
         updating();
 
-//        startCounter(actions.remove(0));
     }
 
     // Lancer le compteur
@@ -108,6 +103,7 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         timerValue.setText("" + String.format("%02d",counter.getMinutes()) + ":"
                 + String.format("%02d", counter.getSecondes())
         );
+        actionLabelView.setText(counter.getActions().get(0).getLabel());
     }
 
     /**
