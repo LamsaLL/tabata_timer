@@ -55,7 +55,7 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
 
     // Lancer le compteur
     public void onStart(View view) {
-
+        //mettre timer == null ou disable le bouton play pour éviter bug
         counter.start();
     }
 
@@ -68,6 +68,11 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
     // Remettre à zéro le compteur
     public void onReset(View view) {
         counter.reset();
+    }
+
+    // Sortir de l'entrainement
+    public void onClose(View view){
+        WorkoutActivity.super.finish();
     }
 
 //    public void startCounter(Action action){

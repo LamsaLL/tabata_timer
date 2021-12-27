@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <Button
+        android:layout_width="90dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/exit_button_text"
+        android:onClick="onClose"
+        />
 
     <TextView
         android:id="@+id/timerValue"
@@ -23,9 +30,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="38dp"
-        android:text="Start"
         android:onClick="onStart"
-        />
+        android:text="Start" />
 
     <Button
         android:id="@+id/pauseButton"
@@ -43,9 +49,8 @@
         android:id="@+id/resetButton"
         android:layout_width="90dp"
         android:layout_height="45dp"
-        android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
-        android:text="Reset"
+        android:layout_centerInParent="true"
         android:onClick="onReset"
-        />
+        android:text="Reset" />
 </RelativeLayout>
