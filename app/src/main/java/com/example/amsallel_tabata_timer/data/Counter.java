@@ -31,7 +31,7 @@ public class Counter extends UpdateSource {
     // Lancer le compteur
     public void start() {
             // Créer le CountDownTimer
-            timer = new CountDownTimer(updatedTime, 500) {
+            timer = new CountDownTimer(updatedTime, 100) {
 
                 // Callback fired on regular interval
                 public void onTick(long millisUntilFinished) {
