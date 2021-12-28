@@ -1,12 +1,15 @@
 package com.example.amsallel_tabata_timer;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.amsallel_tabata_timer.data.Action;
@@ -22,6 +25,7 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
     // VIEW
     private TextView timerValue;
     private TextView actionLabelView;
+    private RelativeLayout workoutLayoutView;
     // DATA
     private Counter counter;
 
@@ -37,16 +41,16 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         ArrayList<Action> actions = new ArrayList<>();
 
         for(int i = 0; i < workout.getNumberOfSets() ; i++) {
-            actions.add(new Action("PRÉPARER", workout.getPreparationTime()));
+            actions.add(new Action("PRÉPARER", workout.getPreparationTime(), 0x7DC71E));
             for (int y = 0; y < workout.getNumberOfCycles(); y++) {
-                actions.add(new Action("TRAVAIL", workout.getWorkTime()));
-                actions.add(new Action("REPOS", workout.getRestTime()));
+                actions.add(new Action("TRAVAIL", workout.getWorkTime(), 0xAA0703));
+                actions.add(new Action("REPOS", workout.getRestTime(), 0x1EB5C9));
             }
-            actions.add(new Action("REPOS AVANT NOUVEAU SET", workout.getRestBtwSetsTime()));
+            actions.add(new Action("REPOS LONG", workout.getRestBtwSetsTime(), 0xDD9A2E));
         }
 
+        workoutLayoutView = (RelativeLayout) findViewById(R.id.workoutLayoutView);
         actionLabelView = (TextView) findViewById(R.id.actionLabelView);
-
         // Récupérer la view
         timerValue = (TextView) findViewById(R.id.timerValue);
         // Initialiser l'objet Compteur
@@ -99,11 +103,15 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
 
     // Mise à jour graphique
     private void updating() {
+        final Action currentAction = counter.getActions().get(0);
+        final @ColorInt int actionColor = currentAction.getColor();
+        final String formatedColor = String.format("#%06X", (0xFFFFFF & actionColor));
         // Affichage des informations du compteur
         timerValue.setText("" + String.format("%02d",counter.getMinutes()) + ":"
                 + String.format("%02d", counter.getSecondes())
         );
-        actionLabelView.setText(counter.getActions().get(0).getLabel());
+        actionLabelView.setText(currentAction.getLabel());
+        workoutLayoutView.setBackgroundColor(Color.parseColor(formatedColor));
     }
 
     /**
