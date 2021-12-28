@@ -1,7 +1,10 @@
 package com.example.amsallel_tabata_timer;
 
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -59,6 +62,16 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
 
         // Abonner l'activité au compteur pour "suivre" les événements
         counter.addOnUpdateListener(this);
+
+        playSound();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                counter.start();
+            }
+        }, 1500);
+
         // Mise à jour graphique
         updating();
 
@@ -80,9 +93,9 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         boolean on = ((ToggleButton) view).isChecked();
 
         if (on) {
-            counter.start();
-        } else {
             counter.pause();
+        } else {
+            counter.start();
         }
     }
 
@@ -96,10 +109,6 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
     public void onClose(View view){
         WorkoutActivity.super.finish();
     }
-
-//    public void startCounter(Action action){
-//
-//    }
 
     // Mise à jour graphique
     private void updating() {
@@ -123,4 +132,9 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         updating();
     }
 
+    public void playSound(){
+        MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.beep1);
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mPlayer.start();
+    }
 }
