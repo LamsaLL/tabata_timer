@@ -29,10 +29,12 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="?android:selectableItemBackground"
+            android:onClick="onSave"
             app:srcCompat="@drawable/ic_round_save_24" />
     </RelativeLayout>
 
     <EditText
+        android:id="@+id/nameWorkout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"

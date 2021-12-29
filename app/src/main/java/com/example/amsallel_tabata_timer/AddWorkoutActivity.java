@@ -1,6 +1,7 @@
 package com.example.amsallel_tabata_timer;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
 import android.os.Handler;
@@ -10,10 +11,30 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.amsallel_tabata_timer.db.DatabaseClient;
+import com.example.amsallel_tabata_timer.db.Workout;
+
+import java.util.List;
+
 public class AddWorkoutActivity extends AppCompatActivity {
+
+    //VIEWS
+    private EditText editTextNameWorkoutView;
+    private EditText editTextPrepSecondsView;
+    private EditText editTextWorkSecondsView;
+    private EditText editTexRestSecondsView;
+    private EditText editTextCyclesView;
+    private EditText editTextSetsView;
+    private EditText editTextRestBtwSetsSecondsView;
+
+    //DB
+    private DatabaseClient mDb;
+
     private Handler repeatUpdateHandler = new Handler();
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
@@ -47,6 +68,9 @@ public class AddWorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_workout);
 
+        // get client database
+        mDb = DatabaseClient.getInstance(getApplicationContext());
+
         final ImageButton buttonUpPrep = (ImageButton) findViewById(R.id.buttonUpPrep);
         final ImageButton buttonDownPrep = (ImageButton) findViewById(R.id.buttonDownPrep);
         final ImageButton buttonUpWork = (ImageButton) findViewById(R.id.buttonUpWork);
@@ -60,19 +84,20 @@ public class AddWorkoutActivity extends AppCompatActivity {
         final ImageButton buttonUpRestBtwSets = (ImageButton) findViewById(R.id.buttonUpRestBtwSets);
         final ImageButton buttonDownRestBtwSets = (ImageButton) findViewById(R.id.buttonDownRestBtwSets);
 
-        final EditText editTextPrepSeconds = (EditText) findViewById(R.id.editTextPrepSeconds);
-        final EditText editTextWorkSeconds = (EditText) findViewById(R.id.editTextWorkSeconds);
-        final EditText editTexRestSeconds = (EditText) findViewById(R.id.editTexRestSeconds);
-        final EditText editTextCycles = (EditText) findViewById(R.id.editTextCycles);
-        final EditText editTextSets = (EditText) findViewById(R.id.editTextSets);
-        final EditText editTextRestBtwSetsSeconds = (EditText) findViewById(R.id.editTextRestBtwSetsSeconds);
+        editTextNameWorkoutView = (EditText) findViewById(R.id.nameWorkout);
+        editTextPrepSecondsView = (EditText) findViewById(R.id.editTextPrepSeconds);
+        editTextWorkSecondsView = (EditText) findViewById(R.id.editTextWorkSeconds);
+        editTexRestSecondsView = (EditText) findViewById(R.id.editTexRestSeconds);
+        editTextCyclesView = (EditText) findViewById(R.id.editTextCycles);
+        editTextSetsView = (EditText) findViewById(R.id.editTextSets);
+        editTextRestBtwSetsSecondsView = (EditText) findViewById(R.id.editTextRestBtwSetsSeconds);
 
-        handleEditTimers(editTextPrepSeconds, buttonUpPrep, buttonDownPrep);
-        handleEditTimers(editTextWorkSeconds, buttonUpWork, buttonDownWork);
-        handleEditTimers(editTexRestSeconds, buttonUpRest, buttonDownRest);
-        handleEditTimers(editTextCycles, buttonUpCycles, buttonDownCycles);
-        handleEditTimers(editTextSets, buttonUpSets, buttonDownSets);
-        handleEditTimers(editTextRestBtwSetsSeconds, buttonUpRestBtwSets, buttonDownRestBtwSets);
+        handleEditTimers(editTextPrepSecondsView, buttonUpPrep, buttonDownPrep);
+        handleEditTimers(editTextWorkSecondsView, buttonUpWork, buttonDownWork);
+        handleEditTimers(editTexRestSecondsView, buttonUpRest, buttonDownRest);
+        handleEditTimers(editTextCyclesView, buttonUpCycles, buttonDownCycles);
+        handleEditTimers(editTextSetsView, buttonUpSets, buttonDownSets);
+        handleEditTimers(editTextRestBtwSetsSecondsView, buttonUpRestBtwSets, buttonDownRestBtwSets);
     }
 
     public void handleEditTimers(EditText editTextView, ImageButton buttonUp, ImageButton buttonDown) {
@@ -135,7 +160,55 @@ public class AddWorkoutActivity extends AppCompatActivity {
         });
     }
 
+    public void saveWorkout() {
+        //Get values in views
+        final String name = editTextNameWorkoutView.getText().toString().trim();
+        final int preparationTime = Integer.parseInt(editTextPrepSecondsView.getText().toString().trim());
+        final int workTime = Integer.parseInt(editTextWorkSecondsView.getText().toString().trim());
+        final int restTime = Integer.parseInt(editTexRestSecondsView.getText().toString().trim());
+        final int numberOfCycles = Integer.parseInt(editTextCyclesView.getText().toString().trim());
+        final int numberOfSets = Integer.parseInt(editTextSetsView.getText().toString().trim());
+        final int restBtwSetsTime = Integer.parseInt(editTextRestBtwSetsSecondsView.getText().toString().trim());
+
+        class SaveWorkout extends AsyncTask<Void, Void, Workout>{
+
+            @Override
+            protected Workout doInBackground(Void... voids) {
+                //Create the workout
+                Workout workout = new Workout();
+                workout.setName(name);
+                workout.setPreparationTime(preparationTime);
+                workout.setWorkTime(workTime);
+                workout.setRestTime(restTime);
+                workout.setNumberOfCycles(numberOfCycles);
+                workout.setNumberOfSets(numberOfSets);
+                workout.setRestBtwSetsTime(restBtwSetsTime);
+
+                mDb.getAppDatabase()
+                        .workoutDao()
+                        .insert(workout);
+                return workout;
+            }
+
+            @Override
+            protected void onPostExecute(Workout workout) {
+                super.onPostExecute(workout);
+
+                //We stop the activity when workout has been created
+                setResult(RESULT_OK);
+                finish();
+                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+            }
+        }
+        SaveWorkout saveWorkout  = new SaveWorkout();
+        saveWorkout.execute();
+    }
+
     public void onClose(View view) {
         AddWorkoutActivity.super.finish();
+    }
+
+    public void onSave (View view )  {
+        saveWorkout();
     }
 }
