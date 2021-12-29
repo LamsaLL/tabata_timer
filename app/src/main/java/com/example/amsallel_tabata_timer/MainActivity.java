@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     // VIEW
     private ListView workoutList;
+    private ImageButton moreActionButtonView;
     private Button buttonAdd;
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mDb = DatabaseClient.getInstance(getApplicationContext());
 
         //get views
+        moreActionButtonView = findViewById(R.id.moreActions);
         workoutList = findViewById(R.id.workoutList);
         buttonAdd = findViewById(R.id.button_add);
 
@@ -137,6 +140,66 @@ public class MainActivity extends AppCompatActivity {
         gw.execute();
     }
 
+    private void findById(long id, final boolean startEditActivity, final boolean deleteAfterFind) {
+        class FindById extends AsyncTask<Void, Void, Workout> {
+            private long id;
+
+            public void setId(long id) {
+                this.id = id;
+            }
+
+            @Override
+            protected Workout doInBackground(Void... voids) {
+                Workout workout = mDb.getAppDatabase()
+                        .workoutDao()
+                        .findById(id);
+                return workout;
+            }
+
+            @Override
+            protected void onPostExecute(Workout workout) {
+                super.onPostExecute(workout);
+                if(startEditActivity) {
+//                    startEditActivity(workout);
+                }
+//                if(startTimerActivity) {
+//                    startTimerActivity(tabata);
+//                }
+                if(deleteAfterFind) {
+                    deleteWorkout(workout);
+                }
+            }
+        }
+        FindById findById = new FindById();
+        findById.setId(id);
+        findById.execute();
+    }
+
+    private void deleteWorkout(Workout workout) {
+        class DeleteWorkout extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mDb.getAppDatabase()
+                        .workoutDao()
+                        .delete(workout);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                getWorkouts();
+            }
+        }
+        DeleteWorkout deleteWorkout = new DeleteWorkout();
+        deleteWorkout.execute();
+    }
+
+    public void onDeleteWorkout(long id){
+        findById(id, false, true);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -154,6 +217,9 @@ public class MainActivity extends AppCompatActivity {
         popup.getMenuInflater()
                 .inflate(R.menu.popup_actions, popup.getMenu());
 
+        long position = (long) view.getTag();
+        Log.i("pos on click button ", String.valueOf(position));
+
         //registering popup with OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
@@ -162,7 +228,14 @@ public class MainActivity extends AppCompatActivity {
                         "You Clicked : " + item.getTitle(),
                         Toast.LENGTH_SHORT
                 ).show();
-                return true;
+
+                switch (item.getItemId()) {
+                    case R.id.deleteWorkout:
+                        onDeleteWorkout(Long.parseLong(view.getTag().toString()));
+                        return true;
+                    default:
+                        return false;
+                }
             }
         });
 

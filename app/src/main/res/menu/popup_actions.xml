@@ -9,6 +9,4 @@
         android:id="@+id/updateWorkout"
         android:title="Modifier"/>
 
-
-
 </menu>
