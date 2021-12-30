@@ -160,11 +160,8 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(Workout workout) {
                 super.onPostExecute(workout);
                 if(startEditActivity) {
-//                    startEditActivity(workout);
+                    startEditActivity(workout);
                 }
-//                if(startTimerActivity) {
-//                    startTimerActivity(tabata);
-//                }
                 if(deleteAfterFind) {
                     deleteWorkout(workout);
                 }
@@ -196,8 +193,26 @@ public class MainActivity extends AppCompatActivity {
         deleteWorkout.execute();
     }
 
+    public void startEditActivity(Workout workout){
+        // Create new intent
+        Intent EditWorkoutActivityIntent = new Intent(MainActivity.this, AddWorkoutActivity.class);
+
+        EditWorkoutActivityIntent.putExtra("workout", workout);
+        EditWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // Launch activity change demand
+        startActivity(EditWorkoutActivityIntent);
+
+        // Message
+        Toast.makeText(MainActivity.this, "Edit : " + workout.getName(), Toast.LENGTH_SHORT).show();
+
+    }
+
     public void onDeleteWorkout(long id){
         findById(id, false, true);
+    }
+
+    public void onUpdateWorkout(long id) {
+        findById(id,true, false);
     }
 
     @Override
@@ -234,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
                         onDeleteWorkout(Long.parseLong(view.getTag().toString()));
                         return true;
                     default:
+                        onUpdateWorkout(Long.parseLong(view.getTag().toString()));
                         return false;
                 }
             }

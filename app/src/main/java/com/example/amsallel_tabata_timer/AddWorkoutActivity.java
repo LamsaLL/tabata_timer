@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +23,9 @@ import com.example.amsallel_tabata_timer.db.Workout;
 import java.util.List;
 
 public class AddWorkoutActivity extends AppCompatActivity {
+
+    private Workout workout;
+    private boolean update;
 
     //VIEWS
     private EditText editTextNameWorkoutView;
@@ -98,6 +102,26 @@ public class AddWorkoutActivity extends AppCompatActivity {
         handleEditTimers(editTextCyclesView, buttonUpCycles, buttonDownCycles);
         handleEditTimers(editTextSetsView, buttonUpSets, buttonDownSets);
         handleEditTimers(editTextRestBtwSetsSecondsView, buttonUpRestBtwSets, buttonDownRestBtwSets);
+
+        if(getIntent().getSerializableExtra("workout") != null){
+            workout = (Workout) getIntent().getSerializableExtra("workout");
+            setWorkoutValuesInView(workout);
+            update = true;
+        }
+        else{
+            workout = new Workout();
+            update = false;
+        }
+    }
+
+    public void setWorkoutValuesInView(Workout workout){
+        editTextNameWorkoutView.setText(String.valueOf(workout.getName()));
+        editTextPrepSecondsView.setText(String.valueOf(workout.getPreparationTime()));
+        editTextWorkSecondsView.setText(String.valueOf(workout.getWorkTime()));
+        editTexRestSecondsView.setText(String.valueOf(workout.getRestTime()));
+        editTextCyclesView.setText(String.valueOf(workout.getNumberOfCycles()));
+        editTextSetsView.setText(String.valueOf(workout.getNumberOfSets()));
+        editTextRestBtwSetsSecondsView.setText(String.valueOf(workout.getRestBtwSetsTime()));
     }
 
     public void handleEditTimers(EditText editTextView, ImageButton buttonUp, ImageButton buttonDown) {
@@ -160,7 +184,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
         });
     }
 
-    public void saveWorkout() {
+    private void saveWorkout() {
         //Get values in views
         final String name = editTextNameWorkoutView.getText().toString().trim();
         final int preparationTime = Integer.parseInt(editTextPrepSecondsView.getText().toString().trim());
@@ -175,7 +199,6 @@ public class AddWorkoutActivity extends AppCompatActivity {
             @Override
             protected Workout doInBackground(Void... voids) {
                 //Create the workout
-                Workout workout = new Workout();
                 workout.setName(name);
                 workout.setPreparationTime(preparationTime);
                 workout.setWorkTime(workTime);
@@ -184,9 +207,16 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 workout.setNumberOfSets(numberOfSets);
                 workout.setRestBtwSetsTime(restBtwSetsTime);
 
-                mDb.getAppDatabase()
-                        .workoutDao()
-                        .insert(workout);
+                if(update) {
+                    mDb.getAppDatabase()
+                            .workoutDao()
+                            .update(workout);
+                }else{
+                    mDb.getAppDatabase()
+                            .workoutDao()
+                            .insert(workout);
+                }
+
                 return workout;
             }
 
@@ -197,11 +227,11 @@ public class AddWorkoutActivity extends AppCompatActivity {
                 //We stop the activity when workout has been created
                 setResult(RESULT_OK);
                 finish();
-                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Saved "+ workout.getName(), Toast.LENGTH_LONG).show();
             }
         }
-        SaveWorkout saveWorkout  = new SaveWorkout();
-        saveWorkout.execute();
+        SaveWorkout sw  = new SaveWorkout();
+        sw.execute();
     }
 
     public void onClose(View view) {
