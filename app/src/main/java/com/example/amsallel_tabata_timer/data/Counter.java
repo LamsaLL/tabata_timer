@@ -36,17 +36,21 @@ public class Counter extends UpdateSource {
                 // Callback fired on regular interval
                 public void onTick(long millisUntilFinished) {
                     updatedTime = millisUntilFinished;
-
+                    //jouer son si seconde = 1 par exemple
                     // Mise à jour
                     update();
                 }
 
                 // Callback fired when the time is up
                 public void onFinish() {
-                    if(actions.get(0) != null){
+
+                    //Get next timer if we're not in the last action
+                    if( actions.size() > 1){
                         actions.remove(0);
                         updatedTime = actions.get(0).getTimeValue() * 1000;
                         Counter.this.start();
+                    }else{
+                        updatedTime = 0;
                     }
 
                     // Mise à jour
