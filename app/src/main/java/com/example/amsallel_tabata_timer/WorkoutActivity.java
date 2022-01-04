@@ -107,6 +107,7 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
 
     // Sortir de l'entrainement
     public void onClose(View view){
+        counter.reset();
         WorkoutActivity.super.finish();
     }
 
@@ -121,6 +122,15 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         );
         actionLabelView.setText(currentAction.getLabel());
         workoutLayoutView.setBackgroundColor(Color.parseColor(formatedColor));
+
+        //if the last action timer is equal to 0 we display the finish view
+        if(counter.getActions().size() == 1 && counter.getSecondes() == 0 && counter.getMillisecondes() == 0){
+            Log.i("finish!", "finish!");
+            actionLabelView.setText("");
+            workoutLayoutView.setBackgroundColor(Color.parseColor("#055555"));
+            timerValue.setText("Fini!");
+
+        }
     }
 
     /**
