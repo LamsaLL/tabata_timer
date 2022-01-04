@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/teal_200"
+    android:descendantFocusability="blocksDescendants"
     android:padding="7dp">
 
     <RelativeLayout
@@ -18,13 +20,26 @@
             android:textSize="20sp"/>
 
         <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/moreActions"
+            android:backgroundTint="@color/teal_200"
+            android:onClick="onPlay"
+            app:srcCompat="@drawable/ic_baseline_play_arrow_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
             android:id="@+id/moreActions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/ic_baseline_more_vert_24"
             android:backgroundTint="@color/teal_200"
-            />
+            android:onClick="onMore"
+            app:srcCompat="@drawable/ic_baseline_more_vert_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+
     </RelativeLayout>
     <TextView
         android:id="@+id/textViewPreparation"

@@ -51,48 +51,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new WorkoutsAdapter(this, new ArrayList<Workout>());
         workoutList.setAdapter(adapter);
 
-        // Add click event to listView
-        workoutList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // Get the clicked workout thanks to adapter
-                Workout workout = adapter.getItem(position);
-
-                Intent WorkoutViewActivityIntent = new Intent(MainActivity.this, WorkoutActivity.class);
-
-                WorkoutViewActivityIntent.putExtra("workout", workout);
-                // Launch activity change demand
-                startActivity(WorkoutViewActivityIntent);
-                // Message
-                Toast.makeText(MainActivity.this, "Click : " + workout.getName(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Add long click event to listView
-        workoutList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // Get the clicked workout thanks to adapter
-                Workout workout = adapter.getItem(position);
-
-                // Create new intent
-                Intent WorkoutViewActivityIntent = new Intent(MainActivity.this, WorkoutActivity.class);
-
-                WorkoutViewActivityIntent.putExtra("workout", (Parcelable) workout);
-                // Launch activity change demand
-                startActivity(WorkoutViewActivityIntent);
-
-                // Message
-                Toast.makeText(MainActivity.this, "LongClick : " + workout.getName(), Toast.LENGTH_SHORT).show();
-
-                return false;
-            }
-        });
-
-        //getTasks();
     }
 
     public void onAddWorkout(View view) {
@@ -223,8 +181,21 @@ public class MainActivity extends AppCompatActivity {
         getWorkouts();
     }
 
+    public void onPlay(View view){
+        int position = workoutList.getPositionForView(view);
+        // Get the clicked workout thanks to adapter
+        Workout workout = adapter.getItem(position);
+
+        Intent WorkoutViewActivityIntent = new Intent(MainActivity.this, WorkoutActivity.class);
+
+        WorkoutViewActivityIntent.putExtra("workout", workout);
+        // Launch activity change demand
+        startActivity(WorkoutViewActivityIntent);
+        // Message
+        Toast.makeText(MainActivity.this, "Click : " + workout.getName(), Toast.LENGTH_SHORT).show();
+    }
+
     public void onMore(View view) {
-//        Log.i("lol", "lol");
         //Creating the instance of PopupMenu
         PopupMenu popup = new PopupMenu(MainActivity.this, view);
 
@@ -233,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
                 .inflate(R.menu.popup_actions, popup.getMenu());
 
         long position = (long) view.getTag();
-        Log.i("pos on click button ", String.valueOf(position));
 
         //registering popup with OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
