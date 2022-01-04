@@ -1,5 +1,6 @@
 package com.example.amsallel_tabata_timer;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.Image;
@@ -117,9 +118,11 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
     }
 
 
-    // Remettre à zéro le compteur
-    public void onReset(View view) {
-        counter.reset();
+    // Replay same workout
+    public void onReplay(View view) {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     // Sortir de l'entrainement
