@@ -2,11 +2,15 @@ package com.example.amsallel_tabata_timer;
 
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +33,10 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
     private TextView timerValue;
     private TextView actionLabelView;
     private RelativeLayout workoutLayoutView;
+    private Button stopButton;
+    private ToggleButton playPauseButton;
+    private ImageButton stopImageButtonView;
+    private ImageButton replayButtonView;
     // DATA
     private Counter counter;
 
@@ -56,6 +64,15 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         actionLabelView = (TextView) findViewById(R.id.actionLabelView);
         // Récupérer la view
         timerValue = (TextView) findViewById(R.id.timerValue);
+        stopButton = (Button) findViewById(R.id.stopButton);
+        playPauseButton = (ToggleButton) findViewById(R.id.playPauseButton);
+        stopImageButtonView = (ImageButton) findViewById(R.id.stopImageButton);
+        replayButtonView = (ImageButton) findViewById(R.id.replayButton);
+
+        //  We hide these buttons until we finish the workout
+        stopImageButtonView.setVisibility(View.GONE);
+        replayButtonView.setVisibility(View.GONE);
+
         // Initialiser l'objet Compteur
         counter = new Counter(actions.get(0).getTimeValue(), actions);
         actionLabelView.setText(actions.get(0).getLabel());
@@ -128,8 +145,11 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
             Log.i("finish!", "finish!");
             actionLabelView.setText("");
             workoutLayoutView.setBackgroundColor(Color.parseColor("#055555"));
-            timerValue.setText("Fini!");
-
+            timerValue.setText("Fini !");
+            stopImageButtonView.setVisibility(View.VISIBLE);
+            replayButtonView.setVisibility(View.VISIBLE);
+            stopButton.setVisibility(View.GONE);
+            playPauseButton.setVisibility(View.GONE);
         }
     }
 
