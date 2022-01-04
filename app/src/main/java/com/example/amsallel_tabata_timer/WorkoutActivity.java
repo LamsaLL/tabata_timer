@@ -143,12 +143,11 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         actionLabelView.setText(currentAction.getLabel());
         workoutLayoutView.setBackgroundColor(Color.parseColor(formatedColor));
 
-        //if the last action timer is equal to 0 we display the finish view
+        // If the last action timer is equal to 0 we display the finish view
         if(counter.getActions().size() == 1 && counter.getSecondes() == 0 && counter.getMillisecondes() == 0){
-            Log.i("finish!", "finish!");
             actionLabelView.setText("");
-            workoutLayoutView.setBackgroundColor(Color.parseColor("#055555"));
-            timerValue.setText("Fini !");
+            workoutLayoutView.setBackgroundColor(Color.parseColor("#2a912e"));
+            timerValue.setText("FINI");
             stopImageButtonView.setVisibility(View.VISIBLE);
             replayButtonView.setVisibility(View.VISIBLE);
             stopButton.setVisibility(View.GONE);

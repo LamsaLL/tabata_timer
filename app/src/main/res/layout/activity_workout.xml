@@ -43,7 +43,7 @@
         android:layout_height="60dp"
         android:layout_below="@id/timerValue"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/teal_200"
+        android:backgroundTint="#2a912e"
         app:srcCompat="@drawable/ic_baseline_stop_circle_60"
         android:onClick="onClose" />
 
@@ -53,7 +53,7 @@
         android:layout_height="60dp"
         android:layout_below="@id/stopImageButton"
         android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/teal_200"
+        android:backgroundTint="#2a912e"
         app:srcCompat="@drawable/ic_baseline_replay_circle_filled_60"
         android:onClick="onReplay" />
 

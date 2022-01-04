@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // get client database
+        // Get client database
         mDb = DatabaseClient.getInstance(getApplicationContext());
 
-        //get views
+        // Get views
         moreActionButtonView = findViewById(R.id.moreActions);
         workoutList = findViewById(R.id.workoutList);
         buttonAdd = findViewById(R.id.button_add);
