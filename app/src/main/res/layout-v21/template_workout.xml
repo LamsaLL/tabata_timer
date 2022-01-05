@@ -7,7 +7,8 @@
     android:orientation="vertical"
     android:background="@color/teal_200"
     android:descendantFocusability="blocksDescendants"
-    android:padding="7dp">
+    android:padding="15dp"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"

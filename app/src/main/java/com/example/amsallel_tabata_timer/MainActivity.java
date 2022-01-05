@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(EditWorkoutIntent);
 
         // Message
-        Toast.makeText(MainActivity.this, "Edition de : " + workout.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Edition de " + workout.getName(), Toast.LENGTH_SHORT).show();
     }
 
     private void getWorkouts() {
@@ -142,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 getWorkouts();
+
+                Toast.makeText(MainActivity.this, "Supression de "+workout.getName()+ "réussite", Toast.LENGTH_SHORT).show();
             }
         }
         DeleteWorkout deleteWorkout = new DeleteWorkout();
@@ -187,15 +189,9 @@ public class MainActivity extends AppCompatActivity {
 
         long position = (long) view.getTag();
 
-        //registering popup with OnMenuItemClickListener
+        //  Registering popup with OnMenuItemClickListener
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(
-                        MainActivity.this,
-                        "You Clicked : " + item.getTitle(),
-                        Toast.LENGTH_SHORT
-                ).show();
-
                 switch (item.getItemId()) {
                     case R.id.deleteWorkout:
                         onDeleteWorkout(Long.parseLong(view.getTag().toString()));

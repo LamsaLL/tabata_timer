@@ -3,17 +3,12 @@ package com.example.amsallel_tabata_timer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
-import android.media.Image;
-import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -27,7 +22,6 @@ import com.example.amsallel_tabata_timer.data.OnUpdateListener;
 import com.example.amsallel_tabata_timer.db.Workout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class WorkoutActivity extends AppCompatActivity implements OnUpdateListener{
 
@@ -100,6 +94,11 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         beep.startTone(ToneGenerator.TONE_DTMF_5, duration);
     }
 
+    public boolean isWorkoutFinished(){
+        // If the last action timer is equal to 0 we display the finish view
+        return (counter.getActions().size() == 1 && counter.getMinutes() ==0 && counter.getSecondes() == 0 && counter.getMillisecondes() == 0);
+    }
+
     // Mise à jour graphique
     private void updating() {
         final Action currentAction = counter.getActions().get(0);
@@ -112,8 +111,7 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         actionLabelView.setText(currentAction.getLabel());
         workoutLayoutView.setBackgroundColor(Color.parseColor(formatedColor));
 
-        // If the last action timer is equal to 0 we display the finish view
-        if(counter.getActions().size() == 1 && counter.getMinutes() ==0 && counter.getSecondes() == 0 && counter.getMillisecondes() == 0){
+        if(isWorkoutFinished()){
             playSound(1000);
 
             actionLabelView.setText("");
@@ -125,7 +123,6 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
             playPauseButtonView.setVisibility(View.GONE);
         }
     }
-
 
     /**
      * Méthode appelée à chaque update du compteur (l'activité est abonnée au compteur)

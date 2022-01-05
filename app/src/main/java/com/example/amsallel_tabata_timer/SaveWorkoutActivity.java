@@ -219,7 +219,7 @@ public class SaveWorkoutActivity extends AppCompatActivity {
                 //We stop the activity when workout has been created
                 setResult(RESULT_OK);
                 finish();
-                Toast.makeText(getApplicationContext(), "Saved "+ workout.getName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Sauvegarde de "+ workout.getName()+" réussite", Toast.LENGTH_LONG).show();
             }
         }
         SaveWorkout sw  = new SaveWorkout();
