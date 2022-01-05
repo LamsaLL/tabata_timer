@@ -52,7 +52,7 @@ public class WorkoutsAdapter extends ArrayAdapter<Workout> {
         textViewWorkTime.setText("Travail: " + workout.getWorkTime() + " secs");
         textViewRestTime.setText("Repos: " + workout.getRestTime() + " secs");
         textNumberOfCycles.setText("Nombre de cycles: " + workout.getNumberOfCycles() );
-        textNumberOfSets.setText("Nombre de set: " + workout.getNumberOfSets() );
+        textNumberOfSets.setText("Nombre de sets: " + workout.getNumberOfSets() );
         textRestBtwSetsTime.setText("Repos entre les sets: " + workout.getRestBtwSetsTime() + " secs");
         actionMoreButtonView.setTag(workout.getId());
 

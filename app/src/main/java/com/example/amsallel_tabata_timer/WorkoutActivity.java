@@ -30,12 +30,12 @@ import java.util.Arrays;
 
 public class WorkoutActivity extends AppCompatActivity implements OnUpdateListener{
 
-    // VIEW
+    // VIEWS
     private TextView timerValue;
     private TextView actionLabelView;
     private RelativeLayout workoutLayoutView;
-    private Button stopButton;
-    private ToggleButton playPauseButton;
+    private Button stopButtonView;
+    private ToggleButton playPauseButtonView;
     private ImageButton stopImageButtonView;
     private ImageButton replayButtonView;
     // DATA
@@ -63,10 +63,10 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
 
         workoutLayoutView = (RelativeLayout) findViewById(R.id.workoutLayoutView);
         actionLabelView = (TextView) findViewById(R.id.actionLabelView);
-        // Récupérer la view
+
         timerValue = (TextView) findViewById(R.id.timerValue);
-        stopButton = (Button) findViewById(R.id.stopButton);
-        playPauseButton = (ToggleButton) findViewById(R.id.playPauseButton);
+        stopButtonView = (Button) findViewById(R.id.stopButton);
+        playPauseButtonView = (ToggleButton) findViewById(R.id.playPauseButton);
         stopImageButtonView = (ImageButton) findViewById(R.id.stopImageButton);
         replayButtonView = (ImageButton) findViewById(R.id.replayButton);
 
@@ -92,43 +92,12 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
 
         // Mise à jour graphique
         updating();
-
     }
 
-    // Lancer le compteur
-    public void onStart(View view) {
-        //mettre timer == null ou disable le bouton play pour éviter bug
-        counter.start();
-    }
-
-    // Mettre en pause le compteur
-    public void onPause(View view) {
-        counter.pause();
-    }
-
-    public void onTogglePlayPause(View view){
-        // Is the toggle on?
-        boolean on = ((ToggleButton) view).isChecked();
-
-        if (on) {
-            counter.pause();
-        } else {
-            counter.start();
-        }
-    }
-
-
-    // Replay same workout
-    public void onReplay(View view) {
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-    }
-
-    // Sortir de l'entrainement
-    public void onClose(View view){
-        counter.reset();
-        WorkoutActivity.super.finish();
+    public void playSound(){
+        MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.beep1);
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mPlayer.start();
     }
 
     // Mise à jour graphique
@@ -150,10 +119,11 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
             timerValue.setText("FINI");
             stopImageButtonView.setVisibility(View.VISIBLE);
             replayButtonView.setVisibility(View.VISIBLE);
-            stopButton.setVisibility(View.GONE);
-            playPauseButton.setVisibility(View.GONE);
+            stopButtonView.setVisibility(View.GONE);
+            playPauseButtonView.setVisibility(View.GONE);
         }
     }
+
 
     /**
      * Méthode appelée à chaque update du compteur (l'activité est abonnée au compteur)
@@ -164,9 +134,27 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         updating();
     }
 
-    public void playSound(){
-        MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.beep1);
-        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mPlayer.start();
+    public void onTogglePlayPause(View view){
+        // Is the toggle on?
+        boolean on = ((ToggleButton) view).isChecked();
+
+        if (on) {
+            counter.pause();
+        } else {
+            counter.start();
+        }
+    }
+
+    // Replay same workout after finish it
+    public void onReplay(View view) {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    // Get out of workout
+    public void onClose(View view){
+        counter.reset();
+        WorkoutActivity.super.finish();
     }
 }

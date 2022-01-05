@@ -3,17 +3,10 @@ package com.example.amsallel_tabata_timer;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -29,10 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseClient mDb;
     private WorkoutsAdapter adapter;
 
-    // VIEW
+    // VIEWS
     private ListView workoutList;
-    private ImageButton moreActionButtonView;
-    private Button buttonAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +34,34 @@ public class MainActivity extends AppCompatActivity {
         mDb = DatabaseClient.getInstance(getApplicationContext());
 
         // Get views
-        moreActionButtonView = findViewById(R.id.moreActions);
         workoutList = findViewById(R.id.workoutList);
-        buttonAdd = findViewById(R.id.button_add);
 
         // Link adapter to listView
         adapter = new WorkoutsAdapter(this, new ArrayList<Workout>());
         workoutList.setAdapter(adapter);
-
     }
 
     public void onAddWorkout(View view) {
         // Create new intent
-        Intent AddWorkoutViewActivityIntent = new Intent(MainActivity.this, AddWorkoutActivity.class);
+        Intent AddWorkoutViewIntent = new Intent(MainActivity.this, SaveWorkoutActivity.class);
 
         // Launch activity change demand
-        startActivity(AddWorkoutViewActivityIntent);
+        startActivity(AddWorkoutViewIntent);
     }
 
-    /**
-     *
-     *
-     */
+    public void startEditActivity(Workout workout){
+        // Create new intent
+        Intent EditWorkoutIntent = new Intent(MainActivity.this, SaveWorkoutActivity.class);
+
+        EditWorkoutIntent.putExtra("workout", workout);
+        EditWorkoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // Launch activity change demand
+        startActivity(EditWorkoutIntent);
+
+        // Message
+        Toast.makeText(MainActivity.this, "Edition de : " + workout.getName(), Toast.LENGTH_SHORT).show();
+    }
+
     private void getWorkouts() {
         ///////////////////////
         // Classe asynchrone permettant de récupérer des taches et de mettre à jour le listView de l'activité
@@ -72,10 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected List<Workout> doInBackground(Void... voids) {
-                List<Workout> workoutList = mDb.getAppDatabase()
+                return mDb.getAppDatabase()
                         .workoutDao()
                         .getAll();
-                return workoutList;
             }
 
             @Override
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         gw.execute();
     }
 
-    private void findById(long id, final boolean startEditActivity, final boolean deleteAfterFind) {
+    private void findById(long id, final boolean isEdit, final boolean isDelete) {
         class FindById extends AsyncTask<Void, Void, Workout> {
             private long id;
 
@@ -117,10 +113,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Workout workout) {
                 super.onPostExecute(workout);
-                if(startEditActivity) {
+                if(isEdit) {
                     startEditActivity(workout);
                 }
-                if(deleteAfterFind) {
+                if(isDelete) {
                     deleteWorkout(workout);
                 }
             }
@@ -151,20 +147,6 @@ public class MainActivity extends AppCompatActivity {
         deleteWorkout.execute();
     }
 
-    public void startEditActivity(Workout workout){
-        // Create new intent
-        Intent EditWorkoutActivityIntent = new Intent(MainActivity.this, AddWorkoutActivity.class);
-
-        EditWorkoutActivityIntent.putExtra("workout", workout);
-        EditWorkoutActivityIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        // Launch activity change demand
-        startActivity(EditWorkoutActivityIntent);
-
-        // Message
-        Toast.makeText(MainActivity.this, "Edit : " + workout.getName(), Toast.LENGTH_SHORT).show();
-
-    }
-
     public void onDeleteWorkout(long id){
         findById(id, false, true);
     }
@@ -176,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         // Mise à jour des entrainements
         getWorkouts();
     }
@@ -192,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         // Launch activity change demand
         startActivity(WorkoutViewActivityIntent);
         // Message
-        Toast.makeText(MainActivity.this, "Click : " + workout.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, workout.getName(), Toast.LENGTH_SHORT).show();
     }
 
     public void onMore(View view) {
@@ -224,8 +205,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        popup.show(); //showing popup menu
-
+        popup.show(); //showing popup
     }
 }

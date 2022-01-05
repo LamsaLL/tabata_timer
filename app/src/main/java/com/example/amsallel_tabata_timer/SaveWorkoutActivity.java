@@ -1,18 +1,12 @@
 package com.example.amsallel_tabata_timer;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.content.Intent;
 import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.amsallel_tabata_timer.db.DatabaseClient;
 import com.example.amsallel_tabata_timer.db.Workout;
 
-import java.util.List;
-
-public class AddWorkoutActivity extends AppCompatActivity {
+public class SaveWorkoutActivity extends AppCompatActivity {
 
     private Workout workout;
     private boolean update;
@@ -235,7 +227,7 @@ public class AddWorkoutActivity extends AppCompatActivity {
     }
 
     public void onClose(View view) {
-        AddWorkoutActivity.super.finish();
+        SaveWorkoutActivity.super.finish();
     }
 
     public void onSave (View view )  {
