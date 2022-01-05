@@ -1,5 +1,7 @@
 package com.example.amsallel_tabata_timer.data;
 
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.CountDownTimer;
 import android.util.Log;
 
@@ -36,7 +38,6 @@ public class Counter extends UpdateSource {
                 // Callback fired on regular interval
                 public void onTick(long millisUntilFinished) {
                     updatedTime = millisUntilFinished;
-                    //jouer son si seconde = 1 par exemple
                     // Mise à jour
                     update();
                 }

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.Image;
 import android.media.MediaPlayer;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -81,7 +82,7 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         // Abonner l'activité au compteur pour "suivre" les événements
         counter.addOnUpdateListener(this);
 
-        playSound();
+        playSound(500);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -94,10 +95,9 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         updating();
     }
 
-    public void playSound(){
-        MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.beep1);
-        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mPlayer.start();
+    public void playSound(int duration){
+        ToneGenerator beep = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+        beep.startTone(ToneGenerator.TONE_DTMF_5, duration);
     }
 
     // Mise à jour graphique
@@ -113,7 +113,9 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         workoutLayoutView.setBackgroundColor(Color.parseColor(formatedColor));
 
         // If the last action timer is equal to 0 we display the finish view
-        if(counter.getActions().size() == 1 && counter.getSecondes() == 0 && counter.getMillisecondes() == 0){
+        if(counter.getActions().size() == 1 && counter.getMinutes() ==0 && counter.getSecondes() == 0 && counter.getMillisecondes() == 0){
+            playSound(1000);
+
             actionLabelView.setText("");
             workoutLayoutView.setBackgroundColor(Color.parseColor("#2a912e"));
             timerValue.setText("FINI");
