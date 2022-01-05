@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -24,6 +25,7 @@ import com.example.amsallel_tabata_timer.db.Workout;
 import java.util.ArrayList;
 
 public class WorkoutActivity extends AppCompatActivity implements OnUpdateListener{
+    private int c = 0;
 
     // VIEWS
     private TextView timerValue;
@@ -53,7 +55,9 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
                 actions.add(new Action("TRAVAIL", workout.getWorkTime(), 0xAA0703));
                 actions.add(new Action("REPOS", workout.getRestTime(), 0x1EB5C9));
             }
-            actions.add(new Action("REPOS LONG", workout.getRestBtwSetsTime(), 0xDD9A2E));
+            if(i < workout.getNumberOfSets() - 1){
+                actions.add(new Action("REPOS LONG", workout.getRestBtwSetsTime(), 0xDD9A2E));
+            }
         }
 
         workoutLayoutView = (RelativeLayout) findViewById(R.id.workoutLayoutView);
@@ -112,8 +116,12 @@ public class WorkoutActivity extends AppCompatActivity implements OnUpdateListen
         workoutLayoutView.setBackgroundColor(Color.parseColor(formatedColor));
 
         if(isWorkoutFinished()){
-            playSound(1000);
+            // We play this sound only one time
+            if(c == 0){
+                playSound(1000);
+            }
 
+            c++;
             actionLabelView.setText("");
             workoutLayoutView.setBackgroundColor(Color.parseColor("#2a912e"));
             timerValue.setText("FINI");

@@ -48,12 +48,12 @@ public class WorkoutsAdapter extends ArrayAdapter<Workout> {
         ImageButton actionMoreButtonView = (ImageButton) rowView.findViewById(R.id.moreActions);
 
         textViewWorkoutTitle.setText(workout.getName());
-        textViewPreparation.setText("Préparation: " + workout.getPreparationTime() + " secs");
-        textViewWorkTime.setText("Travail: " + workout.getWorkTime() + " secs");
-        textViewRestTime.setText("Repos: " + workout.getRestTime() + " secs");
+        textViewPreparation.setText("Préparation: " + workout.getPreparationTime() + " sec");
+        textViewWorkTime.setText("Travail: " + workout.getWorkTime() + " sec");
+        textViewRestTime.setText("Repos: " + workout.getRestTime() + " sec");
         textNumberOfCycles.setText("Nombre de cycles: " + workout.getNumberOfCycles() );
         textNumberOfSets.setText("Nombre de sets: " + workout.getNumberOfSets() );
-        textRestBtwSetsTime.setText("Repos entre les sets: " + workout.getRestBtwSetsTime() + " secs");
+        textRestBtwSetsTime.setText("Repos entre les sets: " + workout.getRestBtwSetsTime() + " sec");
         actionMoreButtonView.setTag(workout.getId());
 
         return rowView;

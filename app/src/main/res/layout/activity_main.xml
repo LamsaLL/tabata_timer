@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:onClick="onAddWorkout"
+            android:backgroundTint="#f97171"
             android:text="@string/button_add_workout" />
         <ListView
             android:id="@+id/workoutList"
